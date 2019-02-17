@@ -29,7 +29,6 @@ namespace DerExam.Net.Areas.Identity.Pages.Account.Manage
 
         [Display(Name = "用户名")]
         public string Username { get; set; }
-
         public bool IsEmailConfirmed { get; set; }
 
         [TempData]
