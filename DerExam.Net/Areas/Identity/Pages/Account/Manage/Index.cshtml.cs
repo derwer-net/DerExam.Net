@@ -27,6 +27,7 @@ namespace DerExam.Net.Areas.Identity.Pages.Account.Manage
             _emailSender = emailSender;
         }
 
+        [Display(Name = "用户名")]
         public string Username { get; set; }
 
         public bool IsEmailConfirmed { get; set; }
@@ -41,10 +42,11 @@ namespace DerExam.Net.Areas.Identity.Pages.Account.Manage
         {
             [Required]
             [EmailAddress]
+            [Display(Name = "邮箱")]
             public string Email { get; set; }
 
             [Phone]
-            [Display(Name = "Phone number")]
+            [Display(Name = "手机号")]
             public string PhoneNumber { get; set; }
         }
 
