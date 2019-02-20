@@ -10,6 +10,7 @@ namespace DerExam.Net.Models
         public int CourseID { get; set; }
         public string CourseNaem { get; set; }
         public string CourseTeacherName { get; set; }
+        public IEnumerable<Classes> CourseClasses { get; set; }
 
     }
 }
