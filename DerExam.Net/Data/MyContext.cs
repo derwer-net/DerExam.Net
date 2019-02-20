@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DerExam.Net.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,14 @@ namespace DerExam.Net.Data
             //modelBuilder.ApplyConfiguration(new AlbumConfiguration());
         }
 
-        //public DbSet<Album> Albums { get; set; }
+        public DbSet<Classes> Classes { get; set; }
+        public DbSet<Course> Course { get; set; }
+
+        public DbSet<Exam> Exam { get; set; }
+
+        public DbSet<Grade> Grade { get; set; }
+
+        public DbSet<QuestionAndAnswer> QuestionAndAnswer { get; set; }
+
     }
 }

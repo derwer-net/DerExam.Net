@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using DerExam.Net.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using DerExam.Net.Models;
 
 namespace DerExam.Net
 {
@@ -38,10 +39,8 @@ namespace DerExam.Net
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>()
-                .AddDefaultUI(UIFramework.Bootstrap4)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
-            services.Configure<IdentityOptions>(options =>
+
+            services.AddDefaultIdentity<UserExt>(options => 
             {
                 // Password settings.
                 options.Password.RequireDigit = false;
@@ -50,12 +49,18 @@ namespace DerExam.Net
                 options.Password.RequireUppercase = false;
                 options.Password.RequiredLength = 6;
                 options.Password.RequiredUniqueChars = 1;
-                
+
                 // User settings.
                 options.User.AllowedUserNameCharacters =
                 "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
                 options.User.RequireUniqueEmail = true;
-            });
+            })
+            .AddDefaultUI(UIFramework.Bootstrap4)
+            .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddDbContext<MyContext>(options =>
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
