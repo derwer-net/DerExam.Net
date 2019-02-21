@@ -9,7 +9,7 @@ namespace DerExam.Net.Models
         {
             courses = new List<Course>();
         }
-        public string ClassId { get; set; }
+        public int ClassId { get; set; }
         public string CourseId { get; set; }
         public List<Course> courses { get; set; }
     }
