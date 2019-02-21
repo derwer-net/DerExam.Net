@@ -1,14 +1,16 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace DerExam.Net.Models
 {
-    public class UserExt
+    public class UserExt:IdentityUser
     {
+        public UserExt()
+        {
+            courses = new List<Course>();
+        }
         public string ClassId { get; set; }
         public string CourseId { get; set; }
-
+        public List<Course> courses { get; set; }
     }
 }
