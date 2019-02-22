@@ -9,6 +9,6 @@ namespace DerExam.Net.Models
     {
         public int ExamId { get; set; }
         public string ExamName { get; set; }
-        public IEnumerable<Classes> Classes { get; set; }
+       
     }
 }
