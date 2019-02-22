@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace DerExam.Net.Models
 {
     public class Course
     {
-        public int CourseID { get; set; }
-        public string CourseNaem { get; set; }
-        public string CourseTeacherName { get; set; }
-        public IEnumerable<Classes> CourseClasses { get; set; }
+        public Course()
+        {
+            Classes = new List<Class>();
+        }
 
+        public int CourseId { get; set; }
+        public string CourseName { get; set; }
+        public List<Class> Classes{ get; set; }
     }
 }

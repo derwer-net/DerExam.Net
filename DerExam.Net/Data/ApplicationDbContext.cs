@@ -8,6 +8,7 @@ namespace DerExam.Net.Data
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options):base(options)
         {
+
         }
     }
 }
