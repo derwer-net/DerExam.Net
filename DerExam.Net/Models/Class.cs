@@ -8,9 +8,9 @@ namespace DerExam.Net.Models
         {
             userExts = new List<UserExt>();
         }
-        public int ClassId { get; set; }
+        public string ClassId { get; set; }
         public string ClassName { get; set; }
-        public int CourseId { get; set; }
+        public string CourseId { get; set; }
         public Course Course { get; set; }
         public string IdentityUserId { get; set; }
         public List<UserExt> userExts { get; set; }

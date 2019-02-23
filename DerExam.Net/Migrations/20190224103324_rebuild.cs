@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DerExam.Net.Migrations
 {
-    public partial class reload : Migration
+    public partial class rebuild : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -20,6 +20,34 @@ namespace DerExam.Net.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetRoles", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Grades",
+                columns: table => new
+                {
+                    GradeId = table.Column<string>(nullable: false),
+                    GradeName = table.Column<string>(nullable: true),
+                    ExamId = table.Column<string>(nullable: true),
+                    ExtKey = table.Column<string>(nullable: true),
+                    GradeResult = table.Column<double>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Grades", x => x.GradeId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "QuestionAndAnswers",
+                columns: table => new
+                {
+                    QuestionAndAnswerId = table.Column<string>(nullable: false),
+                    QusetionContent = table.Column<string>(nullable: true),
+                    AnswerContent = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_QuestionAndAnswers", x => x.QuestionAndAnswerId);
                 });
 
             migrationBuilder.CreateTable(
@@ -80,8 +108,8 @@ namespace DerExam.Net.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
-                    ProviderKey = table.Column<string>(maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(nullable: false),
+                    ProviderKey = table.Column<string>(nullable: false),
                     ProviderDisplayName = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: false)
                 },
@@ -95,8 +123,8 @@ namespace DerExam.Net.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(nullable: false),
-                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
-                    Name = table.Column<string>(maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: false),
                     Value = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -105,58 +133,35 @@ namespace DerExam.Net.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Course",
+                name: "Courses",
                 columns: table => new
                 {
-                    CourseID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CourseNaem = table.Column<string>(nullable: true),
-                    CourseTeacherName = table.Column<string>(nullable: true),
+                    CourseId = table.Column<string>(nullable: false),
+                    CourseName = table.Column<string>(nullable: true),
                     UserExtId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Course", x => x.CourseID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Exam",
-                columns: table => new
-                {
-                    ExamId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    ExamName = table.Column<string>(nullable: true),
-                    UserExtId = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Exam", x => x.ExamId);
+                    table.PrimaryKey("PK_Courses", x => x.CourseId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Classes",
                 columns: table => new
                 {
-                    ClassesId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CoursesId = table.Column<int>(nullable: false),
-                    CourseID = table.Column<int>(nullable: true),
-                    ExamId = table.Column<int>(nullable: true)
+                    ClassId = table.Column<string>(nullable: false),
+                    ClassName = table.Column<string>(nullable: true),
+                    CourseId = table.Column<string>(nullable: true),
+                    IdentityUserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Classes", x => x.ClassesId);
+                    table.PrimaryKey("PK_Classes", x => x.ClassId);
                     table.ForeignKey(
-                        name: "FK_Classes_Course_CourseID",
-                        column: x => x.CourseID,
-                        principalTable: "Course",
-                        principalColumn: "CourseID",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Classes_Exam_ExamId",
-                        column: x => x.ExamId,
-                        principalTable: "Exam",
-                        principalColumn: "ExamId",
+                        name: "FK_Classes_Courses_CourseId",
+                        column: x => x.CourseId,
+                        principalTable: "Courses",
+                        principalColumn: "CourseId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -179,17 +184,37 @@ namespace DerExam.Net.Migrations
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
-                    UserClass = table.Column<string>(nullable: true),
-                    ClassesId = table.Column<int>(nullable: true)
+                    ClassId = table.Column<string>(nullable: true),
+                    CourseId = table.Column<string>(nullable: true),
+                    ExtKey = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AspNetUsers_Classes_ClassesId",
-                        column: x => x.ClassesId,
+                        name: "FK_AspNetUsers_Classes_ClassId",
+                        column: x => x.ClassId,
                         principalTable: "Classes",
-                        principalColumn: "ClassesId",
+                        principalColumn: "ClassId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Exams",
+                columns: table => new
+                {
+                    ExamId = table.Column<string>(nullable: false),
+                    ExamName = table.Column<string>(nullable: true),
+                    UserExtId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Exams", x => x.ExamId);
+                    table.ForeignKey(
+                        name: "FK_Exams_AspNetUsers_UserExtId",
+                        column: x => x.UserExtId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -221,9 +246,9 @@ namespace DerExam.Net.Migrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_ClassesId",
+                name: "IX_AspNetUsers_ClassId",
                 table: "AspNetUsers",
-                column: "ClassesId");
+                column: "ClassId");
 
             migrationBuilder.CreateIndex(
                 name: "EmailIndex",
@@ -238,23 +263,18 @@ namespace DerExam.Net.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Classes_CourseID",
+                name: "IX_Classes_CourseId",
                 table: "Classes",
-                column: "CourseID");
+                column: "CourseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Classes_ExamId",
-                table: "Classes",
-                column: "ExamId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Course_UserExtId",
-                table: "Course",
+                name: "IX_Courses_UserExtId",
+                table: "Courses",
                 column: "UserExtId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Exam_UserExtId",
-                table: "Exam",
+                name: "IX_Exams_UserExtId",
+                table: "Exams",
                 column: "UserExtId");
 
             migrationBuilder.AddForeignKey(
@@ -290,16 +310,8 @@ namespace DerExam.Net.Migrations
                 onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Course_AspNetUsers_UserExtId",
-                table: "Course",
-                column: "UserExtId",
-                principalTable: "AspNetUsers",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Exam_AspNetUsers_UserExtId",
-                table: "Exam",
+                name: "FK_Courses_AspNetUsers_UserExtId",
+                table: "Courses",
                 column: "UserExtId",
                 principalTable: "AspNetUsers",
                 principalColumn: "Id",
@@ -309,12 +321,8 @@ namespace DerExam.Net.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_Course_AspNetUsers_UserExtId",
-                table: "Course");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_Exam_AspNetUsers_UserExtId",
-                table: "Exam");
+                name: "FK_Courses_AspNetUsers_UserExtId",
+                table: "Courses");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
@@ -332,6 +340,15 @@ namespace DerExam.Net.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Exams");
+
+            migrationBuilder.DropTable(
+                name: "Grades");
+
+            migrationBuilder.DropTable(
+                name: "QuestionAndAnswers");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
@@ -341,10 +358,7 @@ namespace DerExam.Net.Migrations
                 name: "Classes");
 
             migrationBuilder.DropTable(
-                name: "Course");
-
-            migrationBuilder.DropTable(
-                name: "Exam");
+                name: "Courses");
         }
     }
 }

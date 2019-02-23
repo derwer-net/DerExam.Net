@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DerExam.Net.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190220122829_reload")]
-    partial class reload
+    [Migration("20190224103324_rebuild")]
+    partial class rebuild
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,51 +21,44 @@ namespace DerExam.Net.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("DerExam.Net.Models.Classes", b =>
+            modelBuilder.Entity("DerExam.Net.Models.Class", b =>
                 {
-                    b.Property<int>("ClassesId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("ClassId")
+                        .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("CourseID");
+                    b.Property<string>("ClassName");
 
-                    b.Property<int>("CoursesId");
+                    b.Property<string>("CourseId");
 
-                    b.Property<int?>("ExamId");
+                    b.Property<string>("IdentityUserId");
 
-                    b.HasKey("ClassesId");
+                    b.HasKey("ClassId");
 
-                    b.HasIndex("CourseID");
-
-                    b.HasIndex("ExamId");
+                    b.HasIndex("CourseId");
 
                     b.ToTable("Classes");
                 });
 
             modelBuilder.Entity("DerExam.Net.Models.Course", b =>
                 {
-                    b.Property<int>("CourseID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("CourseId")
+                        .ValueGeneratedOnAdd();
 
-                    b.Property<string>("CourseNaem");
-
-                    b.Property<string>("CourseTeacherName");
+                    b.Property<string>("CourseName");
 
                     b.Property<string>("UserExtId");
 
-                    b.HasKey("CourseID");
+                    b.HasKey("CourseId");
 
                     b.HasIndex("UserExtId");
 
-                    b.ToTable("Course");
+                    b.ToTable("Courses");
                 });
 
             modelBuilder.Entity("DerExam.Net.Models.Exam", b =>
                 {
-                    b.Property<int>("ExamId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("ExamId")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("ExamName");
 
@@ -75,7 +68,39 @@ namespace DerExam.Net.Migrations
 
                     b.HasIndex("UserExtId");
 
-                    b.ToTable("Exam");
+                    b.ToTable("Exams");
+                });
+
+            modelBuilder.Entity("DerExam.Net.Models.Grade", b =>
+                {
+                    b.Property<string>("GradeId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ExamId");
+
+                    b.Property<string>("ExtKey");
+
+                    b.Property<string>("GradeName");
+
+                    b.Property<double>("GradeResult");
+
+                    b.HasKey("GradeId");
+
+                    b.ToTable("Grades");
+                });
+
+            modelBuilder.Entity("DerExam.Net.Models.QuestionAndAnswer", b =>
+                {
+                    b.Property<string>("QuestionAndAnswerId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("AnswerContent");
+
+                    b.Property<string>("QusetionContent");
+
+                    b.HasKey("QuestionAndAnswerId");
+
+                    b.ToTable("QuestionAndAnswers");
                 });
 
             modelBuilder.Entity("DerExam.Net.Models.UserExt", b =>
@@ -85,15 +110,19 @@ namespace DerExam.Net.Migrations
 
                     b.Property<int>("AccessFailedCount");
 
-                    b.Property<int?>("ClassesId");
+                    b.Property<string>("ClassId");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
+
+                    b.Property<string>("CourseId");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed");
+
+                    b.Property<string>("ExtKey");
 
                     b.Property<bool>("LockoutEnabled");
 
@@ -115,14 +144,12 @@ namespace DerExam.Net.Migrations
 
                     b.Property<bool>("TwoFactorEnabled");
 
-                    b.Property<string>("UserClass");
-
                     b.Property<string>("UserName")
                         .HasMaxLength(256);
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClassesId");
+                    b.HasIndex("ClassId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
@@ -201,11 +228,9 @@ namespace DerExam.Net.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(128);
+                    b.Property<string>("LoginProvider");
 
-                    b.Property<string>("ProviderKey")
-                        .HasMaxLength(128);
+                    b.Property<string>("ProviderKey");
 
                     b.Property<string>("ProviderDisplayName");
 
@@ -236,11 +261,9 @@ namespace DerExam.Net.Migrations
                 {
                     b.Property<string>("UserId");
 
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(128);
+                    b.Property<string>("LoginProvider");
 
-                    b.Property<string>("Name")
-                        .HasMaxLength(128);
+                    b.Property<string>("Name");
 
                     b.Property<string>("Value");
 
@@ -249,36 +272,32 @@ namespace DerExam.Net.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("DerExam.Net.Models.Classes", b =>
+            modelBuilder.Entity("DerExam.Net.Models.Class", b =>
                 {
-                    b.HasOne("DerExam.Net.Models.Course")
-                        .WithMany("CourseClasses")
-                        .HasForeignKey("CourseID");
-
-                    b.HasOne("DerExam.Net.Models.Exam")
+                    b.HasOne("DerExam.Net.Models.Course", "Course")
                         .WithMany("Classes")
-                        .HasForeignKey("ExamId");
+                        .HasForeignKey("CourseId");
                 });
 
             modelBuilder.Entity("DerExam.Net.Models.Course", b =>
                 {
                     b.HasOne("DerExam.Net.Models.UserExt")
-                        .WithMany("UserCourse")
+                        .WithMany("courses")
                         .HasForeignKey("UserExtId");
                 });
 
             modelBuilder.Entity("DerExam.Net.Models.Exam", b =>
                 {
                     b.HasOne("DerExam.Net.Models.UserExt")
-                        .WithMany("UserExams")
+                        .WithMany("exams")
                         .HasForeignKey("UserExtId");
                 });
 
             modelBuilder.Entity("DerExam.Net.Models.UserExt", b =>
                 {
-                    b.HasOne("DerExam.Net.Models.Classes")
-                        .WithMany("MyProperty")
-                        .HasForeignKey("ClassesId");
+                    b.HasOne("DerExam.Net.Models.Class")
+                        .WithMany("userExts")
+                        .HasForeignKey("ClassId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

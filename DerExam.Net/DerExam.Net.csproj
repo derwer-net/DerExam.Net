@@ -11,6 +11,12 @@
     <Compile Remove="Data\Migrations\20190221125235_testMg.Designer.cs" />
     <Compile Remove="Data\Migrations\20190221130646_testDb4user.cs" />
     <Compile Remove="Data\Migrations\20190221130646_testDb4user.Designer.cs" />
+    <Compile Remove="Migrations\20190220122829_reload.cs" />
+    <Compile Remove="Migrations\20190220122829_reload.Designer.cs" />
+    <Compile Remove="Migrations\20190222055621_test.cs" />
+    <Compile Remove="Migrations\20190222055621_test.Designer.cs" />
+    <Compile Remove="Migrations\20190224072745_rebuild.cs" />
+    <Compile Remove="Migrations\20190224072745_rebuild.Designer.cs" />
   </ItemGroup>
 
 

@@ -7,7 +7,7 @@ namespace DerExam.Net.Models
 {
     public class Exam
     {
-        public int ExamId { get; set; }
+        public string ExamId { get; set; }
         public string ExamName { get; set; }
        
     }

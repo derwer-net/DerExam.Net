@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using DerExam.Net.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -15,14 +16,14 @@ namespace DerExam.Net.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class RegisterModel : PageModel
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<UserExt> _signInManager;
+        private readonly UserManager<UserExt> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
 
         public RegisterModel(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager,
+            UserManager<UserExt> userManager,
+            SignInManager<UserExt> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)
         {
@@ -40,25 +41,29 @@ namespace DerExam.Net.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
-            [StringLength(20, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 4)]
-            [Display(Name = "UserName")]
+            [StringLength(20, ErrorMessage = "{0}至少{2}以上的字符且不超过 {1}个字符.", MinimumLength = 4)]
+            [Display(Name = "用户名")]
             public string UserName { get; set; }
 
             [Required]
             [EmailAddress]
-            [Display(Name = "Email")]
+            [Display(Name = "邮箱")]
             public string Email { get; set; }
 
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(100, ErrorMessage = "{0}至少{2}以上的字符且不超过 {1}个字符.", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "Password")]
+            [Display(Name = "密码")]
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
             [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Compare("确认密码", ErrorMessage = "两次的密码不匹配.")]
             public string ConfirmPassword { get; set; }
+
+            [Required]
+            [Display(Name = "班级")]
+            public string ClassId { get; set; }
         }
 
         public void OnGet(string returnUrl = null)
@@ -71,7 +76,7 @@ namespace DerExam.Net.Areas.Identity.Pages.Account
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = Input.UserName, Email = Input.Email };
+                var user = new UserExt { UserName = Input.UserName, Email = Input.Email };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

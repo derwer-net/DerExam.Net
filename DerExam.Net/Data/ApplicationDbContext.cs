@@ -10,5 +10,10 @@ namespace DerExam.Net.Data
         {
 
         }
+        public DbSet<Class> Classes { get; set; }
+        public DbSet<Course> Courses { get; set; }
+        public DbSet<Exam> Exams { get; set; }
+        public DbSet<Grade> Grades { get; set; }
+        public DbSet<QuestionAndAnswer> QuestionAndAnswers { get; set; }
     }
 }

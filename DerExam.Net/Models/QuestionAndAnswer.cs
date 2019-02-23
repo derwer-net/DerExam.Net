@@ -7,7 +7,7 @@ namespace DerExam.Net.Models
 {
     public class QuestionAndAnswer
     {
-        public int QuestionAndAnswerId { get; set; }
+        public string QuestionAndAnswerId { get; set; }
         public string QusetionContent { get; set; }
         public string AnswerContent { get; set; }
     }

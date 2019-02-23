@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace DerExam.Net.Data.Migrations
+namespace DerExam.Net.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -21,13 +21,12 @@ namespace DerExam.Net.Data.Migrations
 
             modelBuilder.Entity("DerExam.Net.Models.Class", b =>
                 {
-                    b.Property<int>("ClassId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("ClassId")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("ClassName");
 
-                    b.Property<int>("CourseId");
+                    b.Property<string>("CourseId");
 
                     b.Property<string>("IdentityUserId");
 
@@ -35,14 +34,13 @@ namespace DerExam.Net.Data.Migrations
 
                     b.HasIndex("CourseId");
 
-                    b.ToTable("Class");
+                    b.ToTable("Classes");
                 });
 
             modelBuilder.Entity("DerExam.Net.Models.Course", b =>
                 {
-                    b.Property<int>("CourseId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("CourseId")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("CourseName");
 
@@ -52,7 +50,55 @@ namespace DerExam.Net.Data.Migrations
 
                     b.HasIndex("UserExtId");
 
-                    b.ToTable("Course");
+                    b.ToTable("Courses");
+                });
+
+            modelBuilder.Entity("DerExam.Net.Models.Exam", b =>
+                {
+                    b.Property<string>("ExamId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ExamName");
+
+                    b.Property<string>("UserExtId");
+
+                    b.HasKey("ExamId");
+
+                    b.HasIndex("UserExtId");
+
+                    b.ToTable("Exams");
+                });
+
+            modelBuilder.Entity("DerExam.Net.Models.Grade", b =>
+                {
+                    b.Property<string>("GradeId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ExamId");
+
+                    b.Property<string>("ExtKey");
+
+                    b.Property<string>("GradeName");
+
+                    b.Property<double>("GradeResult");
+
+                    b.HasKey("GradeId");
+
+                    b.ToTable("Grades");
+                });
+
+            modelBuilder.Entity("DerExam.Net.Models.QuestionAndAnswer", b =>
+                {
+                    b.Property<string>("QuestionAndAnswerId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("AnswerContent");
+
+                    b.Property<string>("QusetionContent");
+
+                    b.HasKey("QuestionAndAnswerId");
+
+                    b.ToTable("QuestionAndAnswers");
                 });
 
             modelBuilder.Entity("DerExam.Net.Models.UserExt", b =>
@@ -62,7 +108,7 @@ namespace DerExam.Net.Data.Migrations
 
                     b.Property<int>("AccessFailedCount");
 
-                    b.Property<int>("ClassId");
+                    b.Property<string>("ClassId");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
@@ -73,6 +119,8 @@ namespace DerExam.Net.Data.Migrations
                         .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed");
+
+                    b.Property<string>("ExtKey");
 
                     b.Property<bool>("LockoutEnabled");
 
@@ -226,8 +274,7 @@ namespace DerExam.Net.Data.Migrations
                 {
                     b.HasOne("DerExam.Net.Models.Course", "Course")
                         .WithMany("Classes")
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("CourseId");
                 });
 
             modelBuilder.Entity("DerExam.Net.Models.Course", b =>
@@ -237,12 +284,18 @@ namespace DerExam.Net.Data.Migrations
                         .HasForeignKey("UserExtId");
                 });
 
+            modelBuilder.Entity("DerExam.Net.Models.Exam", b =>
+                {
+                    b.HasOne("DerExam.Net.Models.UserExt")
+                        .WithMany("exams")
+                        .HasForeignKey("UserExtId");
+                });
+
             modelBuilder.Entity("DerExam.Net.Models.UserExt", b =>
                 {
                     b.HasOne("DerExam.Net.Models.Class")
                         .WithMany("userExts")
-                        .HasForeignKey("ClassId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ClassId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

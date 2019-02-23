@@ -7,10 +7,10 @@ namespace DerExam.Net.Models
 {
     public class Grade
     {
-        public int GradeId { get; set; }
+        public string GradeId { get; set; }
         public string GradeName { get; set; }
-        public int ExamId { get; set; }
-        public int UserID { get; set; }
+        public string ExamId { get; set; }
+        public string ExtKey { get; set; }
         public double GradeResult { get; set; }
     }
 }
