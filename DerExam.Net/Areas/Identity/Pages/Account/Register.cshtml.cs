@@ -57,13 +57,13 @@ namespace DerExam.Net.Areas.Identity.Pages.Account
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
-            [Compare("确认密码", ErrorMessage = "两次的密码不匹配.")]
+            [Display(Name = "确认密码")]
+            [Compare("ConfirmPassword", ErrorMessage = "两次的密码不匹配.")]
             public string ConfirmPassword { get; set; }
 
-            [Required]
-            [Display(Name = "班级")]
-            public string ClassId { get; set; }
+            //[Required]
+            //[Display(Name = "班级")]
+            //public string ClassId { get; set; }
         }
 
         public void OnGet(string returnUrl = null)

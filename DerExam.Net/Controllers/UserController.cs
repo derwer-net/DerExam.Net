@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using DerExam.Net.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,9 +10,9 @@ namespace DerExam.Net.Controllers
     [Authorize]
     public class UserController : Controller
     {
-        private readonly UserManager<IdentityUser> userManager;
+        private readonly UserManager<UserExt> userManager;
 
-        public UserController(UserManager<IdentityUser> userManager)
+        public UserController(UserManager<UserExt> userManager)
         {
             this.userManager = userManager;
         }
