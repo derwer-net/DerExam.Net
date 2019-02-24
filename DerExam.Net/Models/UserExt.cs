@@ -9,11 +9,13 @@ namespace DerExam.Net.Models
         {
             courses = new List<Course>();
             exams = new List<Exam>();
+            grades = new List<Grade>();
         }
         public string ClassId { get; set; }
         public string CourseId { get; set; }
         public string ExtKey { get; set; }
         public List<Course> courses { get; set; }
         public List<Exam> exams { get; set; }
+        public List<Grade> grades { get; set; }
     }
 }

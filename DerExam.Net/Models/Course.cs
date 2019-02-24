@@ -6,11 +6,13 @@ namespace DerExam.Net.Models
     {
         public Course()
         {
-            Classes = new List<Class>();
+            classes = new List<Class>();
+            exams = new List<Exam>();
         }
 
         public string CourseId { get; set; }
         public string CourseName { get; set; }
-        public List<Class> Classes{ get; set; }
+        public List<Class> classes { get; set; }
+        public List<Exam> exams { get; set; }
     }
 }

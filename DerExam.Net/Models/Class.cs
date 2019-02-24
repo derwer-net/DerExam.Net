@@ -12,7 +12,6 @@ namespace DerExam.Net.Models
         public string ClassName { get; set; }
         public string CourseId { get; set; }
         public Course Course { get; set; }
-        public string IdentityUserId { get; set; }
         public List<UserExt> userExts { get; set; }
     }
 }
