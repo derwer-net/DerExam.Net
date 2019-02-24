@@ -10,7 +10,6 @@ namespace DerExam.Net.Models
         public string GradeId { get; set; }
         public string ExamId { get; set; }
         public string ExamName { get; set; }
-        public string ExtKey { get; set; }
         public double GradeResult { get; set; }
     }
 }

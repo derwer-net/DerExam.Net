@@ -10,9 +10,11 @@ namespace DerExam.Net.Models
         public Exam()
         {
             questionAndAnswers = new List<QuestionAndAnswer>();
+            grades = new List<Grade>();
         }
         public string ExamId { get; set; }
         public string ExamName { get; set; }
         public List<QuestionAndAnswer> questionAndAnswers { get; set; }
+        public List<Grade> grades { get; set; }
     }
 }

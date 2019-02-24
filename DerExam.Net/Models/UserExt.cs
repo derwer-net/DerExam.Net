@@ -13,7 +13,6 @@ namespace DerExam.Net.Models
         }
         public string ClassId { get; set; }
         public string CourseId { get; set; }
-        public string ExtKey { get; set; }
         public List<Course> courses { get; set; }
         public List<Exam> exams { get; set; }
         public List<Grade> grades { get; set; }

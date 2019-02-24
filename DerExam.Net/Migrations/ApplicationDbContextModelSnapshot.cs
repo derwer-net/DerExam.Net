@@ -28,8 +28,6 @@ namespace DerExam.Net.Migrations
 
                     b.Property<string>("CourseId");
 
-                    b.Property<string>("IdentityUserId");
-
                     b.HasKey("ClassId");
 
                     b.HasIndex("CourseId");
@@ -58,11 +56,15 @@ namespace DerExam.Net.Migrations
                     b.Property<string>("ExamId")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("CourseId");
+
                     b.Property<string>("ExamName");
 
                     b.Property<string>("UserExtId");
 
                     b.HasKey("ExamId");
+
+                    b.HasIndex("CourseId");
 
                     b.HasIndex("UserExtId");
 
@@ -281,7 +283,7 @@ namespace DerExam.Net.Migrations
             modelBuilder.Entity("DerExam.Net.Models.Class", b =>
                 {
                     b.HasOne("DerExam.Net.Models.Course", "Course")
-                        .WithMany("Classes")
+                        .WithMany("classes")
                         .HasForeignKey("CourseId");
                 });
 
@@ -294,6 +296,10 @@ namespace DerExam.Net.Migrations
 
             modelBuilder.Entity("DerExam.Net.Models.Exam", b =>
                 {
+                    b.HasOne("DerExam.Net.Models.Course")
+                        .WithMany("exams")
+                        .HasForeignKey("CourseId");
+
                     b.HasOne("DerExam.Net.Models.UserExt")
                         .WithMany("exams")
                         .HasForeignKey("UserExtId");
@@ -309,7 +315,7 @@ namespace DerExam.Net.Migrations
             modelBuilder.Entity("DerExam.Net.Models.QuestionAndAnswer", b =>
                 {
                     b.HasOne("DerExam.Net.Models.Exam")
-                        .WithMany("QuestionAndAnswers")
+                        .WithMany("questionAndAnswers")
                         .HasForeignKey("ExamId");
                 });
 
